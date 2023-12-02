@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -32,8 +33,37 @@ fun ArtSpaceScreen() {
 }
 
 @Composable
-fun ArtSpaceContent() {
-
+fun ArtSpaceContent(
+    @DrawableRes imageId: Int,
+    titleText: String,
+    artistName: String,
+    year: String,
+    onCLickPreviousButton: () -> Unit,
+    onClickNextButton: () -> Unit,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+            .fillMaxSize()
+    ) {
+        Spacer(modifier = Modifier.padding(top = 60.dp))
+        ImageSection(
+            imageId = imageId
+        )
+        TitleSection(
+            titleText = titleText,
+            artistName = artistName,
+            year = year,
+            modifier = Modifier
+                .padding(vertical = 24.dp, horizontal = 16.dp)
+                .fillMaxWidth()
+        )
+        ButtonSection(
+            onCLickPreviousButton = onCLickPreviousButton,
+            onClickNextButton = onClickNextButton,
+        )
+    }
 }
 
 @Composable
@@ -74,7 +104,7 @@ fun TitleSection(
     Column(
         modifier = modifier
             .background(
-                color = Color.Gray
+                color = Color.LightGray
             ),
         horizontalAlignment = Alignment.Start,
     ) {
@@ -96,9 +126,9 @@ fun TitleSection(
 
 @Composable
 fun ButtonSection(
-    modifier: Modifier,
     onCLickPreviousButton: () -> Unit,
     onClickNextButton: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier
@@ -126,28 +156,12 @@ fun ButtonSection(
 @Preview
 @Composable
 private fun ArtSpaceScreenPreview() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .background(
-                color = Color.White
-            )
-        ) {
-        ImageSection(
-            imageId = R.drawable.hugaku
-        )
-        TitleSection(
-            titleText = "ArtWorkTitle",
-            artistName = "ArtistName",
-            year = "year",
-            modifier = Modifier
-                .padding(vertical = 24.dp, horizontal = 16.dp)
-                .fillMaxWidth()
-        )
-        ButtonSection(
-            modifier = Modifier,
-            onCLickPreviousButton = {},
-            onClickNextButton = {}
-        )
-    }
+    ArtSpaceContent(
+        imageId = R.drawable.hugaku,
+        titleText = "ArtWorkTitle",
+        artistName = "ArtistName",
+        year = "year",
+        onCLickPreviousButton = {},
+        onClickNextButton = {},
+    )
 }
