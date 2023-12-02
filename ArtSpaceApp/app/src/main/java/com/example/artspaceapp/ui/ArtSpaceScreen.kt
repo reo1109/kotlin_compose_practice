@@ -14,6 +14,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -28,8 +30,21 @@ import androidx.compose.ui.unit.sp
 import com.example.artspaceapp.R
 
 @Composable
-fun ArtSpaceScreen() {
+fun ArtSpaceScreen(
+    viewModel: ArtSpaceViewModel
+) {
+    val uiState by viewModel.uiState.collectAsState()
 
+    ArtSpaceContent(
+        imageId = uiState.currentImageId,
+        titleText = uiState.currentImageTitle,
+        artistName = uiState.currentImageArtist,
+        year = uiState.currentImageYear,
+        onCLickPreviousButton = { viewModel.onClickPreviousButton() },
+        onClickNextButton = { viewModel.onClickNextButton() },
+        onClickPreviousButtonEnabled = uiState.onClickPreviousEnabled,
+        onClickNextButtonEnabled = uiState.onClickNextEnabled
+    )
 }
 
 @Composable
@@ -40,10 +55,13 @@ fun ArtSpaceContent(
     year: String,
     onCLickPreviousButton: () -> Unit,
     onClickNextButton: () -> Unit,
+    onClickPreviousButtonEnabled: Boolean,
+    onClickNextButtonEnabled: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier = modifier
             .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
             .fillMaxSize()
     ) {
@@ -62,6 +80,8 @@ fun ArtSpaceContent(
         ButtonSection(
             onCLickPreviousButton = onCLickPreviousButton,
             onClickNextButton = onClickNextButton,
+            onClickPreviousButtonEnabled = onClickPreviousButtonEnabled,
+            onClickNextButtonEnabled = onClickNextButtonEnabled,
         )
     }
 }
@@ -128,6 +148,8 @@ fun TitleSection(
 fun ButtonSection(
     onCLickPreviousButton: () -> Unit,
     onClickNextButton: () -> Unit,
+    onClickPreviousButtonEnabled: Boolean,
+    onClickNextButtonEnabled: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -138,7 +160,8 @@ fun ButtonSection(
         Button(
             onClick = onCLickPreviousButton,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            enabled = onClickPreviousButtonEnabled,
         ) {
             Text(text = stringResource(R.string.label_previous))
         }
@@ -146,7 +169,8 @@ fun ButtonSection(
         Button(
             onClick = onClickNextButton,
             modifier = Modifier
-                .weight(1f)
+                .weight(1f),
+            enabled = onClickNextButtonEnabled,
         ) {
             Text(text = stringResource(R.string.label_next))
         }
@@ -163,5 +187,7 @@ private fun ArtSpaceScreenPreview() {
         year = "year",
         onCLickPreviousButton = {},
         onClickNextButton = {},
+        onClickPreviousButtonEnabled = false,
+        onClickNextButtonEnabled = true
     )
 }
