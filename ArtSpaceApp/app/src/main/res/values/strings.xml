@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ArtSpaceApp</string>
+    <string name="label_previous">Previous</string>
+    <string name="label_next">Next</string>
+</resources>
