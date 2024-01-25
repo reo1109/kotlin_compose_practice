@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.affirmations.ui.AffirmationAppScreen
 import com.example.affirmations.ui.theme.AffirmationsTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,13 +37,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AffirmationsApp()
+                    AffirmationAppScreen()
                 }
             }
         }
     }
 }
 
-@Composable
-fun AffirmationsApp() {
-}
